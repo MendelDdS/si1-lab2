@@ -3,10 +3,12 @@
 # ~~~~
 
 # Home page
-GET        /                    controllers.Application.index()
-GET        /sobre               controllers.Application.sobre()
-GET        /anuncios            controllers.Application.anuncios()
-POST        /cadastro            controllers.Application.createAD()
+GET         /                               controllers.Application.index()
+GET         /anuncios                       controllers.Application.anuncios()
+GET			/sobre							controllers.Application.sobre()
+GET			/cadastro						controllers.Application.cadastro()
+POST        /anuncios                       controllers.Application.novoAnuncio()
+POST        /anuncios/:codigo/:id/delete    controllers.Application.finalizaAnuncio(codigo: String, id: Long)
 
 # Map static resources from the /public folder to the /assets URL path
-GET        /assets/*file        controllers.Assets.at(path="/public", file)
+GET         /assets/*file                   controllers.Assets.at(path="/public", file)

@@ -1,11 +1,13 @@
 package models;
 
 import javax.persistence.*;
+
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.regex.*;
 
 @Entity
-public class Anuncio {
+public class Anuncio implements Comparable<Anuncio> {
     @Id
     @GeneratedValue
     private Long id;
@@ -39,7 +41,10 @@ public class Anuncio {
 
     @Column
     private String[] formaDeContato;
-
+    
+    @Temporal(TemporalType.DATE)
+    private Date data = new Date();
+    
     public Anuncio() {
     }
 
@@ -105,6 +110,12 @@ public class Anuncio {
             throw new Exception("Por favor, insira seu bairro.");
         this.bairro = bairro;
 	}
+	
+    public Date getData() { return data;}
+
+    public void setData(Date data) {
+        this.data = data;
+    }
 
     public boolean getInteresseEmFormarBanda() { return interesseEmFormarBanda;}
 
@@ -197,5 +208,7 @@ public class Anuncio {
         }
     }
 
-
+    public int compareTo(Anuncio o) {
+        return getData().compareTo(o.getData()) * (-1);
+    }
 }
