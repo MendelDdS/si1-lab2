@@ -30,7 +30,7 @@ public class Application extends Controller {
         List<Anuncio> result = DAO.findAllByClass(Anuncio.class);
         Collections.sort(result);
 
-        return ok(index.render(result, false, adFinished));
+        return ok(views.html.index.render(result, false, adFinished));
     }
 
     @Transactional
