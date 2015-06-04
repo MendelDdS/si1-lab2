@@ -61,22 +61,4 @@ public class testAnuncio {
             e.printStackTrace();
         }
     }
-
-    public void testaEstilosQueGostaOuNaoGosta() {
-        try {
-            anuncio.addListaQueGosta("Alternativa");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            anuncio.addListaQueGosta("Indie");
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        try {
-            anuncio.addListaQueGosta("Indie");
-        } catch (Exception e) {
-            Assert.assertEquals("Voce ja adicionou esse estilo.", e.getMessage());
-        }
-    }
 }

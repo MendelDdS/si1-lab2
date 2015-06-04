@@ -5,7 +5,7 @@
 <meta name="description" content="" />
 <meta name="author" content="" />
 <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>The Quick Ad Musical</title>
+<title>The Quick Ad Music - Cadastro</title>
 <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.css")"/>
 <link rel="stylesheet" href="@routes.Assets.at("stylesheets/font-awesome.css")"/>
 <link rel="stylesheet" href="@routes.Assets.at("stylesheets/style.css")"/>
@@ -62,45 +62,46 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="page-head-line">Forms</h1>
+					<h1 class="page-head-line">Cadastro de anúncio <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></h1>
 				</div>
 			</div>
 			<div class="row">
 				<form action="@routes.Application.novoAnuncio()" method="post">
 					<div class="col-md-6">
 						<div class="panel panel-default">
-							<div class="panel-heading">BASIC FORM ELEMENTS</div>
+							<div class="panel-heading">Informações do Anúncio</div>
 							<div class="panel-body">
 								<div class="form-group">
+									<label><font color="#B22222">* Campos obrigatórios</font></label>
 									<div class="form-group">
-										<label for="inputTitulo">Título</label> <input name="titulo"
-											type="text" class="form-control" id="inputTitulo"
+										<label for="inputTitulo">Título <font color="#B22222">*</font></label> <input name="titulo"
+											type="text" SIZE=50 MAXLENGTH=50 class="form-control" id="inputTitulo"
 											placeholder="Dê um título ao seu anuncio" required
 											pattern=".*\S+.*">
 									</div>
 
 									<div class="form-group">
-										<label for="inputDescricao">Descrição</label>
-										<textarea name="descricao" class="form-control"
-											id="inputDescricao" placeholder="Descreva seu anúncio"
+										<label for="inputDescricao">Descrição <font color="#B22222">*</font></label>
+										<textarea name="descricao" SIZE=150 MAXLENGTH=150 class="form-control"
+											id="inputDescricao" placeholder="Descreva seu anúncio, no máximo 150 caracteres "
 											required pattern=".*\S+.*"></textarea>
 									</div>
 
 									<div class="form-group">
-										<label for="inputCidade">Cidade</label> <input name="cidade"
+										<label for="inputCidade">Cidade <font color="#B22222">*</font></label> <input name="cidade"
 											type="text" class="form-control" id="inputCidade"
 											placeholder="Qual sua cidade? Ex.: Campina Grade" required
 											pattern=".*\S+.*">
 									</div>
 
 									<div class="form-group">
-										<label for="inputBairro">Bairro</label> <input name="bairro"
+										<label for="inputBairro">Bairro <font color="#B22222">*</font></label> <input name="bairro"
 											type="text" class="form-control" id="inputBairro"
 											placeholder="Qual seu bairro? Ex.: Centro" required
 											pattern=".*\S+.*">
 									</div>
 									<div class="form-group">
-										<label for="inputEmail">E-mail</label> <input
+										<label for="inputEmail">E-mail <font color="#B22222">*</font></label> <input
 											name="email" type="email" class="form-control"
 											id="inputEmail"
 											placeholder="Exemplo: gmail.com"
@@ -108,7 +109,7 @@
 									</div>
 									
 									<div class="form-group">
-										<label for="inputFacebook">Facebook</label> <input
+										<label for="inputFacebook">Facebook <font color="#B22222">*</font></label> <input
 											name="facebook" type="text" class="form-control"
 											id="inputFacebook"
 											placeholder="Exemplo: https://www.facebook.com/perfil"
@@ -116,7 +117,7 @@
 									</div>									
 
 									<div class="form-group">
-										<label>Interesse</label>
+										<label>Interesse <font color="#B22222">*</font></label>
 										<div class="radio">
 											<label> <input type="radio" name="interesse"
 												id="inputContatos1" value="Banda" required> Formar
@@ -130,6 +131,13 @@
 												Tocar ocasionalmente
 											</label>
 										</div>
+										
+										<div class="form-group">
+											<label for="inputPalavraChave">Palavra-Chave <font color="#B22222">*</font></label> <input name="palavraChave"
+												type="password" SIZE=50 MAXLENGTH=50 class="form-control" id="inputPalavraChave"
+												placeholder="Dê um título ao seu anuncio" required
+												pattern=".*\S+.*">
+										</div>
 									</div>
 								</div>
 							</div>
@@ -140,7 +148,7 @@
 							<div class="panel-heading">Suas informações</div>
 							<div class="panel-body">
 								<div class="form-group">
-									<label>Instrumentos que você toca</label> <select
+									<label>Instrumentos que você toca <font color="#B22222">*</font></label> <select
 										multiple="multiple" class="form-control" required>
 										<option>One Vale</option>
 										<option>Two Vale</option>

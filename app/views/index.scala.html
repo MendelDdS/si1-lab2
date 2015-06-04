@@ -6,7 +6,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>The Quick Ad Musical</title>
+    <title>The Quick Ad Music</title>
     <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.css")"/>
     <link rel="stylesheet" href="@routes.Assets.at("stylesheets/font-awesome.css")"/>
     <link rel="stylesheet" href="@routes.Assets.at("stylesheets/style.css")"/>
@@ -85,40 +85,37 @@
                      
                     <hr />
                     
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover">
-                            <thead>
-                            <tr>
-                                <th>Título</th>
-                                <th>Data</th>
-                                <th>Contato</th>
-                                <th>Descrição</th>
-                                <th>Bairro / Cidade</th>
-                                <th>Interesse na banda</th>
-                                <th>Estilos que gosta</th>
-                                <th>Estilos que não gosta</th>
-                                <th>Instrumentos que toca</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <div id="anuncios">                            
-							@for(anuncio <- anuncios) {                                       
-                            <tr>
-                                <td><label class="label label-info">@anuncio.getTitulo()</label></td>
-                                <td>@anuncio.getData() </td>
-                                <td><a href="" class="btn btn-social btn-facebook"><i class="fa fa-facebook"></i>&nbsp; Facebook Account</a> &nbsp;OR&nbsp; @anuncio.getEmail()</td>
-                                <td>@anuncio.getDescricao()</td>
-                                <td>@anuncio.getBairro(), @anuncio.getCidade()</td>
-                                <td>@anuncio.getInteresse()</td>
-                                <td></td>
-                                <td></td>
-                                <td></td>
-                            </tr>
-                            }
-                            </div>                            
-                            </tbody>
-                        </table>
+                     <div id="anuncios" class="row">
+
+            @for(anuncio <- anuncios) {
+                <div class="col-md-4 col-sm-6 anuncio">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading"><a href="" data-toggle="modal" data-target="#finalizarModal" class="pull-right finalizarAnuncio">Finalizar</a> <h4
+                        class="anuncioTitulo">@anuncio.getTitulo()</h4></div>
+                        <div class="panel-body">
+                            <p>@anuncio.getDescricao()</p>
+                            <div class="clearfix"></div>
+                            <hr>
+
+                            <p><strong>Cidade:</strong> @anuncio.getCidade()</p>
+                            <p><strong>Bairro:</strong> @anuncio.getBairro()</p>
+
+                            <p><strong>Contatos:</strong> @anuncio.getEmail(), @anuncio.getFacebook()</p>
+                            <p class="anuncioInteresse"><strong>Interesse:</strong> @anuncio.getInteresse()</p>
+
+                            <hr>
+
+                            <div class="input-group">
+                                <div class="input-group-btn">
+                                    <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
+                                </div>
+                                <input type="text" class="form-control" placeholder="Faça uma pergunta">
+                            </div>
+
+                        </div>
                     </div>
+                </div>
+                }
                 </div>
 
     <!-- CONTENT-WRAPPER SECTION END-->

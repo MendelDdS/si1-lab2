@@ -27,6 +27,9 @@ public class Anuncio implements Comparable<Anuncio> {
 	private String bairro;
 
     @Column
+    private String palavraChave;
+    
+    @Column
     private boolean interesseEmFormarBanda = false;
 
     @Column
@@ -54,16 +57,22 @@ public class Anuncio implements Comparable<Anuncio> {
     }
 
 	public Anuncio(String titulo, String descricao, String cidade, String bairro,String email, String perfilFacebook,
-                   boolean interesseEmFormarBanda, boolean interesseEmTocarOcasionalmente, ArrayList<Instrumentos> listaDeInstrumentos, ArrayList<Estilos> listaEstiloGosta, ArrayList<Estilos> listaEstiloNaoGosta) throws Exception {
+                   String interesse, String palavraChave, ArrayList<Instrumentos> listaDeInstrumentos, ArrayList<Estilos> listaEstiloGosta, ArrayList<Estilos> listaEstiloNaoGosta) throws Exception {
 
         this.titulo = titulo;
         this.descricao = descricao;
         this.cidade = cidade;
         this.bairro = bairro;
         this.email = email;
+        this.palavraChave = palavraChave;
         this.perfilFacebook = perfilFacebook;
-        this.interesseEmFormarBanda = interesseEmFormarBanda;
-        this.interesseEmTocarOcasionalmente = interesseEmTocarOcasionalmente;
+        if (interesse.equals("Banda")) {
+        	this.interesseEmFormarBanda = true;
+        }       
+        else if (interesse.equals("Ocasionalmente")){ 
+        	this.interesseEmTocarOcasionalmente = true;
+        }
+        
         this.listaEstiloGosta = listaEstiloGosta;
         this.listaEstiloNaoGosta = listaEstiloNaoGosta;
         this.listaDeInstrumentos = listaDeInstrumentos;
@@ -97,6 +106,15 @@ public class Anuncio implements Comparable<Anuncio> {
 
 	public String getCidade() {
 		return cidade;
+	}
+	
+	public void setInteresse(String interesse) {
+        if (interesse.equals("Banda")) {
+        	this.interesseEmFormarBanda = true;
+        }       
+        else if (interesse.equals("Ocasionalmente")){ 
+        	this.interesseEmTocarOcasionalmente = true;
+        }
 	}
 
 	public void setCidade(String cidade) throws Exception {
