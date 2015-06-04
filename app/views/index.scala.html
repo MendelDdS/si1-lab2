@@ -1,4 +1,4 @@
-@(anuncios: List[Anuncio])(erro: Boolean)(finalizados: Integer)
+@(anuncios: List[Anuncio])
 <!DOCTYPE html>
 <html>
 <head lang="en">
@@ -89,24 +89,30 @@
                         <table class="table table-striped table-bordered table-hover">
                             <thead>
                             <tr>
-                                <th>Palavra-Chave</th>
+                                <th>Título</th>
                                 <th>Data</th>
-                                <th>Titulo</th>
                                 <th>Contato</th>
+                                <th>Descrição</th>
+                                <th>Bairro / Cidade</th>
+                                <th>Interesse na banda</th>
+                                <th>Estilos que gosta</th>
+                                <th>Estilos que não gosta</th>
+                                <th>Instrumentos que toca</th>
                             </tr>
                             </thead>
                             <tbody>
                             <div id="anuncios">                            
 							@for(anuncio <- anuncios) {                                       
                             <tr>
-                                <td># 2501</td>
-                                <td>@anuncio.getData </td>
-                                <td>
-                                    <label class="label label-info">@anuncio.getTitulo</label>
-                                </td>
-                                <td>
-                                    <a href="" class="btn btn-social btn-facebook">
-                                        <i class="fa fa-facebook"></i>&nbsp; Facebook Account</a> &nbsp;OR&nbsp;</td>
+                                <td><label class="label label-info">@anuncio.getTitulo()</label></td>
+                                <td>@anuncio.getData() </td>
+                                <td><a href="" class="btn btn-social btn-facebook"><i class="fa fa-facebook"></i>&nbsp; Facebook Account</a> &nbsp;OR&nbsp; @anuncio.getEmail()</td>
+                                <td>@anuncio.getDescricao()</td>
+                                <td>@anuncio.getBairro(), @anuncio.getCidade()</td>
+                                <td>@anuncio.getInteresse()</td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
                             }
                             </div>                            

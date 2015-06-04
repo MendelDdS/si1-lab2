@@ -66,7 +66,7 @@
 				</div>
 			</div>
 			<div class="row">
-				<form>
+				<form action="@routes.Application.novoAnuncio()" method="post">
 					<div class="col-md-6">
 						<div class="panel panel-default">
 							<div class="panel-heading">BASIC FORM ELEMENTS</div>
@@ -100,20 +100,20 @@
 											pattern=".*\S+.*">
 									</div>
 									<div class="form-group">
-										<label for="inputContatos">Contatos</label> <input
-											name="contatos" type="text" class="form-control"
-											id="inputContatos"
-											placeholder="exemplo at gmail.com, facebook.com/exemplo"
+										<label for="inputEmail">E-mail</label> <input
+											name="email" type="email" class="form-control"
+											id="inputEmail"
+											placeholder="Exemplo: gmail.com"
 											required pattern=".*\S+.*">
 									</div>
-
+									
 									<div class="form-group">
-										<label for="inputCodigo">Palavra-chave</label> <input
-											name="codigo" type="text" class="form-control"
-											id="inputCodigo"
-											placeholder="Digite uma palavra-chave para seu anúncio"
+										<label for="inputFacebook">Facebook</label> <input
+											name="facebook" type="text" class="form-control"
+											id="inputFacebook"
+											placeholder="Exemplo: https://www.facebook.com/perfil"
 											required pattern=".*\S+.*">
-									</div>
+									</div>									
 
 									<div class="form-group">
 										<label>Interesse</label>
@@ -171,7 +171,7 @@
 							</div>
 						</div>
 					</div>
-					<button type="submit" class="btn btn-default">Finalizar</button>
+					<button name="finalizar" type="submit" class="btn btn-default">Finalizar</button>
 				</form>
 
 			</div>

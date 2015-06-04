@@ -8,16 +8,14 @@ import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.cadastro;
-import views.html.index;
 import views.html.sobre;
 
 import java.util.Collections;
 import java.util.List;
 
 public class Application extends Controller {
+	private static Form<Anuncio> adForm = Form.form(Anuncio.class);
     private static final GenericDAO DAO = new GenericDAO();
-    private static Form<Anuncio> form = Form.form(Anuncio.class);
-    private static Form<String> formFinalizar = Form.form(String.class);
     private static int adFinished = 0;
 
     @Transactional
@@ -30,47 +28,35 @@ public class Application extends Controller {
         List<Anuncio> result = DAO.findAllByClass(Anuncio.class);
         Collections.sort(result);
 
-        return ok(views.html.index.render(result, false, adFinished));
+        return ok(views.html.index.render(result));
     }
 
     @Transactional
     public static Result novoAnuncio() {
-        Form<Anuncio> formPreenchido = form.bindFromRequest();
-
-        if (formPreenchido.hasErrors()) {
+    	// O formulário do Anuncio Preenchido
+    	Form<Anuncio> filledForm = adForm.bindFromRequest();
+		
+    	if (filledForm.hasErrors()) {
             List<Anuncio> result = DAO.findAllByClass(Anuncio.class);
-            Collections.sort(result);
-
-            return badRequest(index.render(result, false, adFinished));
-        } else {
-            Anuncio newAnuncio = formPreenchido.get();
-
-            DAO.persist(newAnuncio);
-            DAO.flush();
-
-            return anuncios();
-        }
+            //TODO falta colocar na interface mensagem de erro.
+			return badRequest(views.html.index.render(result));
+    	} else {
+            Anuncio novoAnuncio = filledForm.get();
+            Logger.debug("Criando anuncio: " + filledForm.data().toString() + " como " + novoAnuncio.getTitulo());
+			// Persiste o Livro criado
+			DAO.persist(novoAnuncio);
+			// Espelha no Banco de Dados
+			DAO.flush();
+            /*
+             * Usar routes.Application.<uma action> é uma forma de
+             * evitar colocar rotas literais (ex: "/books")
+             * hard-coded no código. Dessa forma, se mudamos no
+             * arquivo routes, continua funcionando.
+             */
+			return redirect(routes.Application.index());
+		}
     }
-
-    @Transactional
-    public static Result finalizaAnuncio(String codigo, Long id) {
-        Form<String> formFinalizarPreenchido = formFinalizar.bindFromRequest();
-        String codigoForm = formFinalizarPreenchido.data().get("finalizar");
-
-        if (codigoForm.equals(codigo)) {
-            DAO.removeById(Anuncio.class, id);
-            DAO.flush();
-
-            adFinished++;
-            return anuncios();
-        } else {
-            List<Anuncio> resultado = DAO.findAllByClass(Anuncio.class);
-            Collections.sort(resultado);
-
-            return ok(index.render(resultado, true, adFinished));
-        }
-    }
-
+    
     @Transactional
     public static Result sobre() {
     	return ok(sobre.render());

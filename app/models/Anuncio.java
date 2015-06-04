@@ -1,10 +1,12 @@
-﻿package models;
-
-import javax.persistence.*;
+package models;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.regex.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+import javax.persistence.*;
+
 
 @Entity
 public class Anuncio implements Comparable<Anuncio> {
@@ -31,16 +33,19 @@ public class Anuncio implements Comparable<Anuncio> {
     private boolean interesseEmTocarOcasionalmente = false;
 
     @Column
-	private ArrayList<String> listaEstiloGosta;
+	private ArrayList<Estilos> listaEstiloGosta = new ArrayList<Estilos>();
 
     @Column
-	private ArrayList<String> listaEstiloNaoGosta;
+	private ArrayList<Estilos> listaEstiloNaoGosta = new ArrayList<Estilos>();;
 
     @Column
-	private ArrayList<String> listaDeInstrumentos;
+	private ArrayList<Instrumentos> listaDeInstrumentos = new ArrayList<Instrumentos>();;
 
     @Column
-    private String[] formaDeContato;
+    private String email;
+
+    @Column
+    private String perfilFacebook;
     
     @Temporal(TemporalType.DATE)
     private Date data = new Date();
@@ -48,21 +53,20 @@ public class Anuncio implements Comparable<Anuncio> {
     public Anuncio() {
     }
 
-	public Anuncio(String titulo, String descricao, String cidade, String bairro,
-                   boolean interesseEmFormarBanda, boolean interesseEmTocarOcasionalmente, ArrayList<String> listaDeInstrumentos, String email,
-                   String perfilFacebook, ArrayList<String> listaEstiloGosta, ArrayList<String> listaEstiloNaoGosta) throws Exception {
+	public Anuncio(String titulo, String descricao, String cidade, String bairro,String email, String perfilFacebook,
+                   boolean interesseEmFormarBanda, boolean interesseEmTocarOcasionalmente, ArrayList<Instrumentos> listaDeInstrumentos, ArrayList<Estilos> listaEstiloGosta, ArrayList<Estilos> listaEstiloNaoGosta) throws Exception {
 
-        formaDeContato = new String[2];
-        setTitulo(titulo);
-        setDescricao(descricao);
-        setCidade(cidade);
-        setBairro(bairro);
-        setInteresseEmFormarBanda(interesseEmFormarBanda);
-        setInteresseEmTocarOcasionalmente(interesseEmTocarOcasionalmente);
-        setListaEstiloGosta(listaEstiloGosta);
-        setListaEstiloNaoGosta(listaEstiloGosta);
-        setListaDeInstrumentos(listaDeInstrumentos);
-        addContato(email, perfilFacebook);
+        this.titulo = titulo;
+        this.descricao = descricao;
+        this.cidade = cidade;
+        this.bairro = bairro;
+        this.email = email;
+        this.perfilFacebook = perfilFacebook;
+        this.interesseEmFormarBanda = interesseEmFormarBanda;
+        this.interesseEmTocarOcasionalmente = interesseEmTocarOcasionalmente;
+        this.listaEstiloGosta = listaEstiloGosta;
+        this.listaEstiloNaoGosta = listaEstiloNaoGosta;
+        this.listaDeInstrumentos = listaDeInstrumentos;
 	}
 
     public Long getId() { return id;}
@@ -135,40 +139,24 @@ public class Anuncio implements Comparable<Anuncio> {
             interesseEmTocarOcasionalmente = false;
     }
 
-	public void addListaQueGosta(String estilo) throws Exception {
-        if (estilo != null) {
-            if (listaEstiloGosta.contains(estilo)) {
-                throw new Exception("Voce ja adicionou esse estilo.");
-            }
-            listaEstiloGosta.add(estilo);
-        }
-	}
+    public String getInteresse() {
+    	if (getInteresseEmFormarBanda()) {
+    		return "Interessado em formar banda";
+    	} else {
+    		return "Interessado em tocar ocasionalmente";
+    	}    	
+    }
 
-    public void setListaEstiloGosta(ArrayList<String> listaEstiloGosta) {
+    public void setListaEstiloGosta(ArrayList<Estilos> listaEstiloGosta) {
         this.listaEstiloGosta = listaEstiloGosta;
     }
-	
-	public void addListaQueNaoGosta(String estilo) throws Exception {
-        if (estilo != null) {
-            if (listaEstiloNaoGosta.contains(estilo)) {
-                throw new Exception("Voce ja adicionou esse estilo.");
-            }
-            listaEstiloNaoGosta.add(estilo);
-        }
-	}
+    
 
-    public void setListaEstiloNaoGosta(ArrayList<String> listaEstiloNaoGosta) {
+    public void setListaEstiloNaoGosta(ArrayList<Estilos> listaEstiloNaoGosta) {
         this.listaEstiloNaoGosta = listaEstiloNaoGosta;
     }
 
-	public void addInstrumentos(String instrumento) throws Exception{
-		if (instrumento.trim() == "" || instrumento == null) {
-			 throw new Exception("Especifique os instrumentos que voce toca.");
-		}
-		listaDeInstrumentos.add(instrumento);
-	}
-
-    public void setListaDeInstrumentos(ArrayList<String> listaDeInstrumentos) throws Exception {
+    public void setListaDeInstrumentos(ArrayList<Instrumentos> listaDeInstrumentos) throws Exception {
         if (listaDeInstrumentos.isEmpty()) {
             throw  new Exception("Voce precisa dizer quais instrumentos toca.");
         }
@@ -176,26 +164,17 @@ public class Anuncio implements Comparable<Anuncio> {
         this.listaDeInstrumentos = listaDeInstrumentos;
     }
 
-    public void addContato(String email, String perfilFacebook) throws Exception {
-        if ((email.trim() == "") && (perfilFacebook.trim() == "") || (email == null && perfilFacebook == null)) {
-            throw new Exception("Insira pelo menos uma forma de contato.");
-        }
-
-        if (email.trim() == "" || email == null) {
-            formaDeContato[1] = perfilFacebook;
-        }
-
-        else if (perfilFacebook.trim() == "" || perfilFacebook == null) {
-            validEmail(email);
-            formaDeContato[0] = email;
-        }
-
-        else {
-            formaDeContato[1] = perfilFacebook;
-            validEmail(email);
-            formaDeContato[0] = email;
-        }
+    public void setEmail(String email) {
+    	this.email = email;
     }
+    
+    public void setFacebook(String perfilFacebook) {
+    	this.perfilFacebook = perfilFacebook;
+    }
+    
+    public String getEmail() { return email;}
+    
+    public String getFacebook() { return perfilFacebook;}
 
     public boolean validEmail(String email) throws Exception {
         Pattern p = Pattern.compile("^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$");
@@ -208,7 +187,20 @@ public class Anuncio implements Comparable<Anuncio> {
         }
     }
 
-    public int compareTo(Anuncio o) {
+    @Override
+	public int compareTo(Anuncio o) {
         return getData().compareTo(o.getData()) * (-1);
     }
+
+	public ArrayList<Estilos> getListaEstiloGosta() {
+		return listaEstiloGosta;
+	}
+
+	public ArrayList<Estilos> getListaEstiloNaoGosta() {
+		return listaEstiloNaoGosta;
+	}
+
+	public ArrayList<Instrumentos> getListaDeInstrumentos() {
+		return listaDeInstrumentos;
+	}
 }
