@@ -13,10 +13,10 @@ import java.util.Collections;
 import java.util.List;
 
 public class Application extends Controller {
+    private static int adsHelped = 15;
     private static final GenericDAO DAO = new GenericDAO();
     private static Form<Anuncio> form = Form.form(Anuncio.class);
-    private static Form<String> formFinalizar = Form.form(String.class);
-    private static int adsFinished = 15;
+    private static Form<String> formFinish = Form.form(String.class);
 
     @Transactional
     public static Result index() {
@@ -25,10 +25,10 @@ public class Application extends Controller {
 
     @Transactional
     public static Result anuncios() {
-        List<Anuncio> resultado = DAO.findAllByClass(Anuncio.class);
-        Collections.sort(resultado);
+        List<Anuncio> atualizado = DAO.findAllByClass(Anuncio.class);
+        Collections.sort(atualizado);
 
-        return ok(index.render(resultado));
+        return ok(index.render(atualizado, false, adsHelped));
     }
 
     @Transactional
@@ -36,10 +36,10 @@ public class Application extends Controller {
         Form<Anuncio> formPreenchido = form.bindFromRequest();
 
         if (formPreenchido.hasErrors()) {
-            List<Anuncio> resultado = DAO.findAllByClass(Anuncio.class);
-            Collections.sort(resultado);
+            List<Anuncio> atualizado = DAO.findAllByClass(Anuncio.class);
+            Collections.sort(atualizado);
 
-            return badRequest(index.render(resultado));
+            return badRequest(index.render(atualizado, false, adsHelped));
         } else {
             Anuncio newAnuncio = formPreenchido.get();
 
@@ -52,7 +52,7 @@ public class Application extends Controller {
 
     @Transactional
     public static Result finalizaAnuncio(String codigo, Long id) {
-        Form<String> formFinalizarPreenchido = formFinalizar.bindFromRequest();
+        Form<String> formFinalizarPreenchido = formFinish.bindFromRequest();
         String codigoForm = formFinalizarPreenchido.data().get("finalizar");
         String encontrouParceiros = formFinalizarPreenchido.data().get("encontrouParceiros");
 
@@ -61,15 +61,15 @@ public class Application extends Controller {
             DAO.flush();
 
             if (encontrouParceiros.equals("Sim")) {
-                adsFinished++;
+            	adsHelped++;
             }
 
-            return anuncios();
+            return index();
         } else {
-            List<Anuncio> resultado = DAO.findAllByClass(Anuncio.class);
-            Collections.sort(resultado);
+            List<Anuncio> atualizado = DAO.findAllByClass(Anuncio.class);
+            Collections.sort(atualizado);
 
-            return ok(index.render(resultado));
+            return ok(index.render(atualizado, true, adsHelped));
         }
     }
     @Transactional

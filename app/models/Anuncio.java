@@ -28,8 +28,8 @@ public class Anuncio implements Comparable<Anuncio> {
 
     @Column
     private String palavraChave;
-    
-    @Column
+ 
+	@Column
     private boolean interesseEmFormarBanda = false;
 
     @Column
@@ -204,6 +204,14 @@ public class Anuncio implements Comparable<Anuncio> {
             throw new Exception("Este e-mail nao e válido");
         }
     }
+    
+    public String getPalavraChave() {
+		return palavraChave;
+	}
+
+	public void setPalavraChave(String palavraChave) {
+		this.palavraChave = palavraChave;
+	}
 
     @Override
 	public int compareTo(Anuncio o) {

@@ -1,137 +1,211 @@
-@(anuncios: List[Anuncio])
+@(anuncios: List[Anuncio])(erro: Boolean)(ajudados: Integer)
+
 <!DOCTYPE html>
 <html>
 <head lang="en">
-    <meta charset="utf-8" />
-    <meta name="description" content="" />
-    <meta name="author" content="" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-    <title>The Quick Ad Music</title>
-    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.css")"/>
-    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/font-awesome.css")"/>
-    <link rel="stylesheet" href="@routes.Assets.at("stylesheets/style.css")"/>
+<meta charset="utf-8" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+<title>The Quick Ad Music</title>
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/bootstrap.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/font-awesome.css")"/>
+<link rel="stylesheet" href="@routes.Assets.at("stylesheets/style.css")"/>
 
 </head>
 <body>
-    <div class="navbar navbar-inverse set-radius-zero">
-        <div class="container">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="@routes.Application.index()">
+	<div class="navbar navbar-inverse set-radius-zero">
+		<div class="container">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle" data-toggle="collapse"
+					data-target=".navbar-collapse">
+					<span class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand" href="@routes.Application.index()"> <img
+					src="@routes.Assets.at("images/logo.png")" />
+				</a>
+			</div>
 
-                    <img src="@routes.Assets.at("images/logo.png")" />
-                </a>
+			<div class="left-div">
+				<div class="user-settings-wrapper">
+					<ul class="nav">
 
-            </div>
+						<li class="dropdown"><a href="@routes.Application.cadastro()">
+								<span class="glyphicon glyphicon-plus" style="font-size: 25px;"></span>
+						</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- LOGO HEADER END-->
+	<section class="menu-section">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="navbar-collapse collapse ">
+						<ul id="menu-top" class="nav navbar-nav navbar-right">
+							<li><a class="menu-top-active"
+								href="@routes.Application.index()">Home</a></li>
+							<li><a href="@routes.Application.cadastro()">Cadastrar</a></li>
+							<li><a href="@routes.Application.sobre()">Sobre</a></li>
+						</ul>
+					</div>
+				</div>
 
-            <div class="left-div">
-                <div class="user-settings-wrapper">
-                    <ul class="nav">
+			</div>
+		</div>
+	</section>
+	<!-- MENU SECTION END-->
+	<div class="content-wrapper">
+		<div class="container">
+			<div class="row">
+				<div class="col-md-12">
+					<h4 class="page-head-line">
+						Home
+						<p style="text-align: right">@ajudados anúncios ajudaram as pessoas a encontrar parceiros</p>
+					</h4>
 
-                         <li class="dropdown">
-							<a href="@routes.Application.cadastro()">
-                               <span class="glyphicon glyphicon-plus" style="font-size: 25px;"></span>
-                            </a>
-                         </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- LOGO HEADER END-->
-    <section class="menu-section">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="navbar-collapse collapse ">
-                        <ul id="menu-top" class="nav navbar-nav navbar-right">
-                            <li><a class="menu-top-active" href="@routes.Application.index()">Home</a></li>
-                            <li><a href="@routes.Application.cadastro()">Cadastrar</a></li>
-                            <li><a href="@routes.Application.sobre()">Sobre</a></li>
-                        </ul>
-                    </div>
-                </div>
+				</div>
 
-            </div>
-        </div>
-    </section>
-    <!-- MENU SECTION END-->
-    <div class="content-wrapper">
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    <h4 class="page-head-line">Home</h4>
+			</div>
+			<div class="row">
+				<div class="col-md-12">
+					<div class="alert alert-success">
+						<h4>Esse site você poderá criar anuncios da sua banda ou
+							fazer anúncios de interesse em participar de bandas, logo abaixo
+							você encontra o botão para criar seu anuncio. Você também poderá
+							buscar anúncios criados por outras pessoas na barra de navegação,
+							clicando em "Pesquisar".</h4>
+					</div>
+				</div>
 
-                </div>
+			</div>
+			<div class="text-center alert alert-info">
+				<a href="@routes.Application.cadastro()" class="btn btn-info"><span
+					class="glyphicon glyphicon-list"></span> Criar anuncio </a>&nbsp;
+			</div>
 
-            </div>
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="alert alert-success">
-                        <h4>Esse site você poderá criar anuncios da sua banda ou fazer anúncios de interesse em participar de bandas, logo abaixo
-                            você encontra o botão para criar seu anuncio. Você também poderá buscar anúncios criados por outras pessoas na barra
-                            de navegação, clicando em "Pesquisar".</h4>
-                    </div>
-                </div>
+			<hr />
+			@if(erro) {
+			<div id="erroAlerta" class="alert alert-danger alert-dismissible"
+				role="alert">
+				<button type="button" class="close" data-dismiss="alert"
+					aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				Palavra-chave incorreta para este anúncio.
+			</div>
+			}
+			<div id="anuncios" class="row">
 
-            </div>
-                    <div class="text-center alert alert-info">
-                        <a href="@routes.Application.cadastro()" class="btn btn-info"><span class="glyphicon glyphicon-list"></span> Criar anuncio </a>&nbsp;
-                    </div>
-                     
-                    <hr />
-                    
-                     <div id="anuncios" class="row">
+				@for(anuncio <- anuncios) {
+				<div class="col-md-4 col-sm-6 anuncio">
+					<div class="panel panel-primary">
+						<div class="panel-heading">
+							<a href="" data-toggle="modal" data-target="#finalizarModal"
+								class="pull-right finalizarAnuncio "><span
+								class="glyphicon glyphicon-remove-sign"
+								style="font-size: 2em; color: #FFFFFF"></span></a>
+							<h4 class="anuncioTitulo">@anuncio.getTitulo()</h4>
+						</div>
+						<div class="panel-body">
+							<p>@anuncio.getDescricao()</p>
+							<div class="clearfix"></div>
+							<hr>
 
-            @for(anuncio <- anuncios) {
-                <div class="col-md-4 col-sm-6 anuncio">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading"><a href="" data-toggle="modal" data-target="#finalizarModal" class="pull-right finalizarAnuncio">Finalizar</a> <h4
-                        class="anuncioTitulo">@anuncio.getTitulo()</h4></div>
-                        <div class="panel-body">
-                            <p>@anuncio.getDescricao()</p>
-                            <div class="clearfix"></div>
-                            <hr>
+							<p>
+								<strong>Cidade:</strong> @anuncio.getCidade()
+							</p>
+							<p>
+								<strong>Bairro:</strong> @anuncio.getBairro()
+							</p>
 
-                            <p><strong>Cidade:</strong> @anuncio.getCidade()</p>
-                            <p><strong>Bairro:</strong> @anuncio.getBairro()</p>
+							<p>
+								<strong>Contatos:</strong> @anuncio.getEmail(),
+								@anuncio.getFacebook()
+							</p>
+							<p class="anuncioInteresse">
+								<strong>Interesse:</strong> @anuncio.getInteresse()
+							</p>
 
-                            <p><strong>Contatos:</strong> @anuncio.getEmail(), @anuncio.getFacebook()</p>
-                            <p class="anuncioInteresse"><strong>Interesse:</strong> @anuncio.getInteresse()</p>
+							<hr>
 
-                            <hr>
+							<div class="input-group">
+								<div class="input-group-btn">
+									<button class="btn btn-default">
+										<i class="glyphicon glyphicon-flag"></i>
+									</button>
+								</div>
+								<input type="text" class="form-control"
+									placeholder="Você pode perguntar ao anunciante aqui.">
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="modal fade" id="finalizarModal">
+					<div class="modal-dialog">
+						<div class="modal-content">
+							<div class="modal-header">
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+								<h4 class="modal-title">Insira a palavra-chave do anuncio</h4>
+							</div>
 
-                            <div class="input-group">
-                                <div class="input-group-btn">
-                                    <button class="btn btn-default"><i class="glyphicon glyphicon-share"></i></button>
-                                </div>
-                                <input type="text" class="form-control" placeholder="Faça uma pergunta">
-                            </div>
+							<div class="modal-body">
+								<form
+									action="@routes.Application.finalizaAnuncio(anuncio.getPalavraChave(), anuncio.getId())"
+									method="POST">
+									<div class="form-group">
+										<input name="finalizar" type="text" class="form-control"
+											id="inputFinalizar" placeholder="Palavra-chave do seu anúncio"
+											required pattern=".*\S+.*">
+									</div>
 
-                        </div>
-                    </div>
-                </div>
-                }
-                </div>
+									<div class="form-group">
+										<label>Você encontrou os parceiros que procurava?</label>
+										<div class="radio">
+											<label> <input type="radio" name="encontrouParceiros"
+												id="inputEncontrou1" value="Sim" required> Sim
+											</label>
+										</div>
 
-    <!-- CONTENT-WRAPPER SECTION END-->
-    <footer>
-        <div class="container">
-            <div class="row">
-                <div class="col-md-12">
-                    &copy; Mendelssohn Dantas de Sa | By : <a href="http://www.designbootstrap.com/" target="_blank">DesignBootstrap</a>
-                </div>
+										<div class="radio">
+											<label> <input type="radio" name="encontrouParceiros"
+												id="inputEncontrou2" value="Não" required> Não
+											</label>
+										</div>
+									</div>
 
-            </div>
-        </div>
-    </footer>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
-    <script src="@routes.Assets.at("javascripts/jquery-1.11.1.js")"></script>
-    <script src="@routes.Assets.at("javascripts/bootstrap.js")"></script>
+									<button type="submit" class="btn btn-info">Pronto</button>
+								</form>
+							</div>
+						</div>
+					</div>
+				</div>
+				}
+			</div>
+
+			<!-- CONTENT-WRAPPER SECTION END-->
+			<footer>
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							&copy; Mendelssohn Dantas de Sa | By : <a
+								href="http://www.designbootstrap.com/" target="_blank">DesignBootstrap</a>
+						</div>
+
+					</div>
+				</div>
+			</footer>
+			<script
+				src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+			<script
+				src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+			<script src="@routes.Assets.at("javascripts/jquery-1.11.1.js")"></script>
+			<script src="@routes.Assets.at("javascripts/bootstrap.js")"></script>
 </body>
 </html>
