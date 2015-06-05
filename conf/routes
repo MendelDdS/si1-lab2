@@ -9,6 +9,6 @@ GET         /                               controllers.Application.index()
 GET			/sobre							controllers.Application.sobre()
 GET			/cadastrar						controllers.Application.cadastro()
 POST		/cadastrar						controllers.Application.novoAnuncio()
-POST        /anuncios/:codigo/:id/delete    controllers.Application.finalizaAnuncio(codigo: String, id: Long)
+POST        /anuncios/:codigo/:id/delete    controllers.Application.deletaAnuncio(codigo: String, id: Long)
 
 GET        	/assets/*file        controllers.Assets.at(path="/public", file)

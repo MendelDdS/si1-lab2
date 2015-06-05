@@ -62,59 +62,66 @@
 		<div class="container">
 			<div class="row">
 				<div class="col-md-12">
-					<h1 class="page-head-line">Cadastro de anúncio <span class="glyphicon glyphicon-th-list" aria-hidden="true"></span></h1>
+					<h1 class="page-head-line">
+						Cadastro de anúncio <span class="glyphicon glyphicon-th-list"
+							aria-hidden="true"></span>
+					</h1>
 				</div>
 			</div>
 			<div class="row">
 				<form action="@routes.Application.novoAnuncio()" method="post">
-					<div class="col-md-6">
+					<div class="col-md-8 col-md-offset-2">
 						<div class="panel panel-default">
 							<div class="panel-heading">Informações do Anúncio</div>
 							<div class="panel-body">
 								<div class="form-group">
-									<label><font color="#B22222">* Campos obrigatórios</font></label>
+									<label><font color="#B22222">* Campos
+											obrigatórios</font></label>
 									<div class="form-group">
-										<label for="inputTitulo">Título <font color="#B22222">*</font></label> <input name="titulo"
-											type="text" SIZE=50 MAXLENGTH=50 class="form-control" id="inputTitulo"
+										<label for="inputTitulo">Título <font color="#B22222">*</font></label>
+										<input name="titulo" type="text" SIZE=50 MAXLENGTH=50
+											class="form-control" id="inputTitulo"
 											placeholder="Dê um título ao seu anuncio" required
 											pattern=".*\S+.*">
 									</div>
 
 									<div class="form-group">
-										<label for="inputDescricao">Descrição <font color="#B22222">*</font></label>
-										<textarea name="descricao" SIZE=150 MAXLENGTH=150 class="form-control"
-											id="inputDescricao" placeholder="Descreva seu anúncio, no máximo 150 caracteres "
+										<label for="inputDescricao">Descrição <font
+											color="#B22222">*</font></label>
+										<textarea name="descricao" SIZE=150 MAXLENGTH=150
+											class="form-control" id="inputDescricao"
+											placeholder="Descreva seu anúncio, no máximo 150 caracteres "
 											required pattern=".*\S+.*"></textarea>
 									</div>
 
 									<div class="form-group">
-										<label for="inputCidade">Cidade <font color="#B22222">*</font></label> <input name="cidade"
-											type="text" class="form-control" id="inputCidade"
+										<label for="inputCidade">Cidade <font color="#B22222">*</font></label>
+										<input name="cidade" type="text" class="form-control"
+											id="inputCidade"
 											placeholder="Qual sua cidade? Ex.: Campina Grade" required
 											pattern=".*\S+.*">
 									</div>
 
 									<div class="form-group">
-										<label for="inputBairro">Bairro <font color="#B22222">*</font></label> <input name="bairro"
-											type="text" class="form-control" id="inputBairro"
-											placeholder="Qual seu bairro? Ex.: Centro" required
+										<label for="inputBairro">Bairro <font color="#B22222">*</font></label>
+										<input name="bairro" type="text" class="form-control"
+											id="inputBairro" placeholder="Qual seu bairro? Ex.: Centro"
+											required pattern=".*\S+.*">
+									</div>
+									<div class="form-group">
+										<label for="inputEmail">E-mail <font color="#B22222">*</font></label>
+										<input name="email" type="email" class="form-control"
+											id="inputEmail" placeholder="Exemplo: gmail.com" required
 											pattern=".*\S+.*">
 									</div>
+
 									<div class="form-group">
-										<label for="inputEmail">E-mail <font color="#B22222">*</font></label> <input
-											name="email" type="email" class="form-control"
-											id="inputEmail"
-											placeholder="Exemplo: gmail.com"
-											required pattern=".*\S+.*">
-									</div>
-									
-									<div class="form-group">
-										<label for="inputFacebook">Facebook <font color="#B22222">*</font></label> <input
-											name="facebook" type="text" class="form-control"
-											id="inputFacebook"
+										<label for="inputFacebook">Facebook <font
+											color="#B22222">*</font></label> <input name="facebook" type="text"
+											class="form-control" id="inputFacebook"
 											placeholder="Exemplo: https://www.facebook.com/perfil"
 											required pattern=".*\S+.*">
-									</div>									
+									</div>
 
 									<div class="form-group">
 										<label>Interesse <font color="#B22222">*</font></label>
@@ -131,55 +138,43 @@
 												Tocar ocasionalmente
 											</label>
 										</div>
-										
+
 										<div class="form-group">
-											<label for="inputPalavraChave">Palavra-Chave <font color="#B22222">*</font></label> <input name="palavraChave"
-												type="password" SIZE=50 MAXLENGTH=50 class="form-control" id="inputPalavraChave"
+											<label for="inputPalavraChave">Palavra-Chave <font
+												color="#B22222">*</font></label> <input name="palavraChave"
+												type="password" SIZE=50 MAXLENGTH=50 class="form-control"
+												id="inputPalavraChave"
 												placeholder="Dê um título ao seu anuncio" required
 												pattern=".*\S+.*">
 										</div>
 									</div>
 								</div>
-							</div>
-						</div>
-					</div>
-					<div class="col-md-6">
-						<div class="panel panel-default">
-							<div class="panel-heading">Suas informações</div>
-							<div class="panel-body">
+								<div class="panel-heading">Suas informações</div>
 								<div class="form-group">
-									<label>Instrumentos que você toca <font color="#B22222">*</font></label> <select
-										multiple="multiple" class="form-control" required>
-										<option>One Vale</option>
-										<option>Two Vale</option>
-										<option>Three Vale</option>
-										<option>Four Vale</option>
-									</select>
+									<label>Instrumentos que você toca <font color="#B22222">*</font></label>
+									<input name="instrumentos" type="text" class="form-control"
+										id="inputInstrumentos"
+										placeholder="Quais instrumentos você toca? Separe-os com vírgula (,)"
+										required pattern=".*\S+.*">
 								</div>
 								<hr />
 								<div class="form-group">
-									<label>Estilos musicais que você gosta</label> <select
-										multiple="multiple" class="form-control">
-										<option>One Vale</option>
-										<option>Two Vale</option>
-										<option>Three Vale</option>
-										<option>Four Vale</option>
-									</select>
+									<label>Estilos musicais que você gosta</label> <input
+										name="estilosGosta" type="text" class="form-control"
+										id="inputEstilosGosta"
+										placeholder="Quais estilos músicais você gosta? Separe-os com vírgula (,)">
 								</div>
 								<hr />
 								<div class="form-group">
-									<label>Estilos musicais que você não gosta</label> <select
-										multiple="multiple" class="form-control">
-										<option>One Vale</option>
-										<option>Two Vale</option>
-										<option>Three Vale</option>
-										<option>Four Vale</option>
-									</select>
+									<label>Estilos musicais que você não gosta</label> <input
+										name="estilosNaoGosta" type="text" class="form-control"
+										id="inputEstilosNaoGosta"
+										placeholder="Quais estilos músicais você não gosta? Separe-os com vírgula (,)">
 								</div>
+								<button name="finalizar" type="submit" class="btn btn-danger" aria-label="Left Align">Finalizar</button>
 							</div>
 						</div>
 					</div>
-					<button name="finalizar" type="submit" class="btn btn-default">Finalizar</button>
 				</form>
 
 			</div>
@@ -203,5 +198,7 @@
 	<script src="@routes.Assets.at("javascripts/jquery-1.11.1.js")"></script>
 	<!-- BOOTSTRAP SCRIPTS  -->
 	<script src="@routes.Assets.at("javascripts/bootstrap.js")"></script>
+	<script src="@routes.Assets.at("javascripts/index.js")"></script>
+	
 </body>
 </html>

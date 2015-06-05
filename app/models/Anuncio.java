@@ -1,10 +1,7 @@
 package models;
 
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
-
+import java.util.Objects;
 import javax.persistence.*;
 
 
@@ -36,13 +33,13 @@ public class Anuncio implements Comparable<Anuncio> {
     private boolean interesseEmTocarOcasionalmente = false;
 
     @Column
-	private ArrayList<Estilos> listaEstiloGosta = new ArrayList<Estilos>();
+	private String estilosGosta;
 
     @Column
-	private ArrayList<Estilos> listaEstiloNaoGosta = new ArrayList<Estilos>();;
+	private String estilosNaoGosta;
 
     @Column
-	private ArrayList<Instrumentos> listaDeInstrumentos = new ArrayList<Instrumentos>();;
+	private String instrumentos;
 
     @Column
     private String email;
@@ -57,7 +54,7 @@ public class Anuncio implements Comparable<Anuncio> {
     }
 
 	public Anuncio(String titulo, String descricao, String cidade, String bairro,String email, String perfilFacebook,
-                   String interesse, String palavraChave, ArrayList<Instrumentos> listaDeInstrumentos, ArrayList<Estilos> listaEstiloGosta, ArrayList<Estilos> listaEstiloNaoGosta) throws Exception {
+                   String interesse, String palavraChave, String Instrumentos, String estilosGosta, String estilosNaoGosta) throws Exception {
 
         this.titulo = titulo;
         this.descricao = descricao;
@@ -66,16 +63,16 @@ public class Anuncio implements Comparable<Anuncio> {
         this.email = email;
         this.palavraChave = palavraChave;
         this.perfilFacebook = perfilFacebook;
+        this.estilosGosta = estilosGosta;
+        this.estilosNaoGosta = estilosNaoGosta;
+        this.instrumentos = Instrumentos;
+        
         if (interesse.equals("Banda")) {
         	this.interesseEmFormarBanda = true;
         }       
         else if (interesse.equals("Ocasionalmente")){ 
         	this.interesseEmTocarOcasionalmente = true;
         }
-        
-        this.listaEstiloGosta = listaEstiloGosta;
-        this.listaEstiloNaoGosta = listaEstiloNaoGosta;
-        this.listaDeInstrumentos = listaDeInstrumentos;
 	}
 
     public Long getId() { return id;}
@@ -165,21 +162,17 @@ public class Anuncio implements Comparable<Anuncio> {
     	}    	
     }
 
-    public void setListaEstiloGosta(ArrayList<Estilos> listaEstiloGosta) {
-        this.listaEstiloGosta = listaEstiloGosta;
+    public void setEstilosGosta(String estilosGosta) {
+        this.estilosGosta = estilosGosta;
     }
     
 
-    public void setListaEstiloNaoGosta(ArrayList<Estilos> listaEstiloNaoGosta) {
-        this.listaEstiloNaoGosta = listaEstiloNaoGosta;
+    public void setEstilosNaoGosta(String estilosNaoGosta) {
+        this.estilosNaoGosta = estilosNaoGosta;
     }
 
-    public void setListaDeInstrumentos(ArrayList<Instrumentos> listaDeInstrumentos) throws Exception {
-        if (listaDeInstrumentos.isEmpty()) {
-            throw  new Exception("Voce precisa dizer quais instrumentos toca.");
-        }
-
-        this.listaDeInstrumentos = listaDeInstrumentos;
+    public void setInstrumentos(String Instrumentos) {
+         this.instrumentos = Instrumentos;
     }
 
     public void setEmail(String email) {
@@ -190,21 +183,18 @@ public class Anuncio implements Comparable<Anuncio> {
     	this.perfilFacebook = perfilFacebook;
     }
     
+    public boolean isEstilosGostaEmpty() {
+        return this.estilosGosta.length() == 0;
+    }
+
+    public boolean isEstilosNaoGostaEmpty() {
+        return this.estilosNaoGosta.length() == 0;
+    }
+    
     public String getEmail() { return email;}
     
     public String getFacebook() { return perfilFacebook;}
-
-    public boolean validEmail(String email) throws Exception {
-        Pattern p = Pattern.compile("^[\\w-]+(\\.[\\w-]+)*@([\\w-]+\\.)+[a-zA-Z]{2,7}$");
-        Matcher m = p.matcher(email);
-        if (m.find()){
-            return true;
-        }
-        else{
-            throw new Exception("Este e-mail nao e válido");
-        }
-    }
-    
+  
     public String getPalavraChave() {
 		return palavraChave;
 	}
@@ -218,15 +208,29 @@ public class Anuncio implements Comparable<Anuncio> {
         return getData().compareTo(o.getData()) * (-1);
     }
 
-	public ArrayList<Estilos> getListaEstiloGosta() {
-		return listaEstiloGosta;
+	public String getEstilosGosta() {
+		return estilosGosta;
 	}
 
-	public ArrayList<Estilos> getListaEstiloNaoGosta() {
-		return listaEstiloNaoGosta;
+	public String getEstilosNaoGosta() {
+		return estilosNaoGosta;
 	}
 
-	public ArrayList<Instrumentos> getListaDeInstrumentos() {
-		return listaDeInstrumentos;
+	public String getInstrumentos() {
+		return instrumentos;
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null || !(obj instanceof Anuncio)) {
+			return false;
+		}
+		Anuncio outroAnuncio = (Anuncio) obj;
+		return Objects.equals(outroAnuncio.getTitulo(), this.getTitulo());
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hashCode(this.getTitulo());
 	}
 }

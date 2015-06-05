@@ -12,7 +12,7 @@ function busca() {
         buscaInputTermos[buscaInputTermos.length - 1] = buscaInputTermos[buscaInputTermos.length - 1].trim();
 
         for (var i = 0; i < anuncios.length; i++) {
-            anuncio = $(anuncios[i]); // Wrap em jQuery
+            anuncio = $(anuncios[i]);
             resultado = true;
 
             if (instrumentos) {
@@ -67,4 +67,19 @@ function busca() {
 
 $(function () {
     busca();
+
+    $('#btnToggle').click(function () {
+        if ($(this).hasClass('on')) {
+            $('#main .col-md-6').addClass('col-md-4').removeClass('col-md-6');
+            $(this).removeClass('on');
+        }
+        else {
+            $('#main .col-md-4').addClass('col-md-6').removeClass('col-md-4');
+            $(this).addClass('on');
+        }
+    });
+});
+
+$(function SubstituiVirgulaPorPonto(campo) {
+	campo.value = campo.value.replace(/&nbsp/gi, ",");
 });

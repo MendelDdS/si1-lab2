@@ -64,7 +64,8 @@
 				<div class="col-md-12">
 					<h4 class="page-head-line">
 						Home
-						<p style="text-align: right">@ajudados anúncios ajudaram as pessoas a encontrar parceiros</p>
+						<p style="text-align: right">@ajudados anúncios ajudaram as
+							pessoas a encontrar parceiros</p>
 					</h4>
 
 				</div>
@@ -73,7 +74,7 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="alert alert-success">
-						<h4>Esse site você poderá criar anuncios da sua banda ou
+						<h4>Nesse site você poderá criar anuncios da sua banda ou
 							fazer anúncios de interesse em participar de bandas, logo abaixo
 							você encontra o botão para criar seu anuncio. Você também poderá
 							buscar anúncios criados por outras pessoas na barra de navegação,
@@ -98,8 +99,35 @@
 				Palavra-chave incorreta para este anúncio.
 			</div>
 			}
+			
 			<div id="anuncios" class="row">
+				<div class="collapse navbar-collapse" id="navbar-collapse1">
+					<form class="navbar-form pull-left">
+						<div class="input-group">
+							<input id="busca" title="Separe os termos com vírgulas."
+								type="text" class="form-control"
+								placeholder="Busque anúncios aqui" name="srch-term"
+								id="srch-term">
+							<div class="input-group-btn">
+								<button class="btn btn-default btn-primary" type="submit">
+									<i class="glyphicon glyphicon-search"></i>
+								</button>
+							</div>
 
+							<span class="input-group-addon buscaFiltro"> <input
+								id="checkInstrumentos" type="checkbox" aria-label="...">
+								Instrumentos
+							</span> <span class="input-group-addon buscaFiltro"> <input
+								id="checkEstilos" type="checkbox" aria-label="...">
+								Estilos
+							</span> <span class="input-group-addon buscaFiltro"> <input
+								id="checkInteresse" type="checkbox" aria-label="...">
+								Interesse 
+							</span>
+						</div>
+					</form>
+				</div>
+				
 				@for(anuncio <- anuncios) {
 				<div class="col-md-4 col-sm-6 anuncio">
 					<div class="panel panel-primary">
@@ -130,6 +158,20 @@
 								<strong>Interesse:</strong> @anuncio.getInteresse()
 							</p>
 
+							<p class="anuncioInstrumentos">
+								<strong>Instrumentos:</strong> @anuncio.getInstrumentos()
+							</p>
+
+							@if(!anuncio.isEstilosGostaEmpty) {
+							<p class="anuncioEstilos">
+								<strong>Estilos que gosta:</strong> @anuncio.getEstilosGosta()
+							</p>
+							} @if(!anuncio.isEstilosNaoGostaEmpty) {
+							<p>
+								<strong>Estilos que não gosta:</strong>
+								@anuncio.getEstilosNaoGosta()
+							</p>
+							}
 							<hr>
 
 							<div class="input-group">
@@ -157,12 +199,13 @@
 
 							<div class="modal-body">
 								<form
-									action="@routes.Application.finalizaAnuncio(anuncio.getPalavraChave(), anuncio.getId())"
+									action="@routes.Application.deletaAnuncio(anuncio.getPalavraChave(), anuncio.getId())"
 									method="POST">
 									<div class="form-group">
 										<input name="finalizar" type="text" class="form-control"
-											id="inputFinalizar" placeholder="Palavra-chave do seu anúncio"
-											required pattern=".*\S+.*">
+											id="inputFinalizar"
+											placeholder="Palavra-chave do seu anúncio" required
+											pattern=".*\S+.*">
 									</div>
 
 									<div class="form-group">
@@ -207,5 +250,7 @@
 				src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 			<script src="@routes.Assets.at("javascripts/jquery-1.11.1.js")"></script>
 			<script src="@routes.Assets.at("javascripts/bootstrap.js")"></script>
+			<script src="@routes.Assets.at("javascripts/index.js")"></script>
+			
 </body>
 </html>

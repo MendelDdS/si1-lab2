@@ -2,7 +2,6 @@ package controllers;
 
 import models.Anuncio;
 import models.DAO.GenericDAO;
-import play.Logger;
 import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
@@ -51,7 +50,7 @@ public class Application extends Controller {
     }
 
     @Transactional
-    public static Result finalizaAnuncio(String codigo, Long id) {
+    public static Result deletaAnuncio(String codigo, Long id) {
         Form<String> formFinalizarPreenchido = formFinish.bindFromRequest();
         String codigoForm = formFinalizarPreenchido.data().get("finalizar");
         String encontrouParceiros = formFinalizarPreenchido.data().get("encontrouParceiros");
@@ -64,7 +63,7 @@ public class Application extends Controller {
             	adsHelped++;
             }
 
-            return index();
+            return anuncios();
         } else {
             List<Anuncio> atualizado = DAO.findAllByClass(Anuncio.class);
             Collections.sort(atualizado);
