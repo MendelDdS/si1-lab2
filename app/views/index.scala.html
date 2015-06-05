@@ -99,7 +99,7 @@
 				Palavra-chave incorreta para este anúncio.
 			</div>
 			}
-			
+
 			<div id="anuncios" class="row">
 				<div class="collapse navbar-collapse" id="navbar-collapse1">
 					<form class="navbar-form pull-left">
@@ -107,14 +107,8 @@
 							<input id="busca" title="Separe os termos com vírgulas."
 								type="text" class="form-control"
 								placeholder="Busque anúncios aqui" name="srch-term"
-								id="srch-term">
-							<div class="input-group-btn">
-								<button class="btn btn-default btn-primary" type="submit">
-									<i class="glyphicon glyphicon-search"></i>
-								</button>
-							</div>
-
-							<span class="input-group-addon buscaFiltro"> <input
+								id="srch-term"> <span
+								class="input-group-addon buscaFiltro"> <input
 								id="checkInstrumentos" type="checkbox" aria-label="...">
 								Instrumentos
 							</span> <span class="input-group-addon buscaFiltro"> <input
@@ -122,12 +116,12 @@
 								Estilos
 							</span> <span class="input-group-addon buscaFiltro"> <input
 								id="checkInteresse" type="checkbox" aria-label="...">
-								Interesse 
+								Interesse
 							</span>
 						</div>
 					</form>
 				</div>
-				
+
 				@for(anuncio <- anuncios) {
 				<div class="col-md-4 col-sm-6 anuncio">
 					<div class="panel panel-primary">
@@ -174,15 +168,91 @@
 							}
 							<hr>
 
-							<div class="input-group">
-								<div class="input-group-btn">
-									<button class="btn btn-default">
-										<i class="glyphicon glyphicon-flag"></i>
-									</button>
+
+							<form action="@routes.Application.fazerPergunta(anuncio.getId())"
+								method="POST">
+								<div class="input-group">
+									<div class="input-group-btn">
+										<button type="submit" class="btn btn-default">
+											<i class="glyphicon glyphicon-share"></i>
+										</button>
+									</div>
+									<input name="pergunta" type="text" class="form-control"
+										placeholder="Faça uma pergunta" required pattern=".*\S+.*">
 								</div>
-								<input type="text" class="form-control"
-									placeholder="Você pode perguntar ao anunciante aqui.">
+							</form>
+
+							<hr>
+
+							@for(conversa <- anuncio.getConversas()) { 
+							<a href="" data-toggle="modal" data-target="#abusivoModal@conversa.getId()"
+								class="pull-right comentarioAbusivo"><p	style="font-size: 10px;">Abusivo</p></a>
+							<div class="modal fade " id="abusivoModal@conversa.getId()">
+								<div class="modal-dialog style="width: 50%"">
+									<div class="modal-content col-md-6 col-sm-2">
+										<div class="modal-body">
+											<form action="@routes.Application.comentarioAbusivo(conversa.getId(), anuncio.getId())"	method="POST">
+												<label>Este comentário é abusivo?</label>
+												<button type="submit" class="btn btn-primary">Sim</button>
+											</form>
+										</div>
+									</div>
+								</div>
 							</div>
+
+							@if(conversa.getPergunta() != null) {
+							<div class="pergunta">
+								<p>
+									<strong>Anônimo:</strong> @conversa.getPergunta()
+								</p>
+							</div>
+
+							@if(conversa.getResposta == null) { <a href=""
+								data-toggle="modal"
+								data-target="#responderModal@conversa.getId()"
+								class="responderComentario">Responder</a>
+
+							<div class="modal fade" id="responderModal@conversa.getId()">
+								<div class="modal-dialog">
+									<div class="modal-content">
+										<div class="modal-header">
+											<button type="button" class="close" data-dismiss="modal"
+												aria-label="Close">
+												<span aria-hidden="true">&times;</span>
+											</button>
+											<h4 class="modal-title">Resposta</h4>
+										</div>
+
+										<div class="modal-body">
+											<form
+												action="@routes.Application.responderPergunta(conversa.getId(), anuncio.getId())"
+												method="POST">
+												<div class="form-group">
+													<label for="inputPalavraChave">Palavra-Chave</label> <input
+														name="palavraChave" type="text" class="form-control"
+														id="inputPalavraChave" placeholder="Código do seu anúncio"
+														required pattern=".*\S+.*">
+												</div>
+
+												<div class="form-group">
+													<label>Resposta</label> <input name="resposta" type="text"
+														class="form-control" id="inputResposta"
+														placeholder="Sua resposta" required pattern=".*\S+.*">
+												</div>
+
+												<button type="submit" class="btn btn-primary">Responder</button>
+											</form>
+										</div>
+									</div>
+								</div>
+							</div>
+							} } @if(conversa.getResposta != null) {
+							<div class="resposta">
+								<strong>Anunciante:</strong> @conversa.getResposta()
+							</div>
+							}
+							<hr>
+							}
 						</div>
 					</div>
 				</div>
@@ -251,6 +321,5 @@
 			<script src="@routes.Assets.at("javascripts/jquery-1.11.1.js")"></script>
 			<script src="@routes.Assets.at("javascripts/bootstrap.js")"></script>
 			<script src="@routes.Assets.at("javascripts/index.js")"></script>
-			
 </body>
 </html>

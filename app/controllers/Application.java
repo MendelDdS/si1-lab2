@@ -72,6 +72,48 @@ public class Application extends Controller {
         }
     }
     @Transactional
+    public static Result fazerPergunta(Long id) {
+        Form<String> formPerguntaPreenchido = formFinish.bindFromRequest();
+        String pergunta = formPerguntaPreenchido.data().get("pergunta");
+
+        Anuncio anuncio = DAO.findByEntityId(Anuncio.class, id);
+        anuncio.fazerPergunta(pergunta);
+
+        DAO.persist(anuncio);
+        DAO.flush();
+
+        return anuncios();
+    }
+
+    @Transactional
+    public static Result responderPergunta(Long idConversa, Long id) {
+        Form<String> formRespostaPreenchido = formFinish.bindFromRequest();
+        String resposta = formRespostaPreenchido.data().get("resposta");
+        String palavraChave = formRespostaPreenchido.data().get("palavraChave");
+
+        Anuncio anuncio = DAO.findByEntityId(Anuncio.class, id);
+
+        try {
+            anuncio.responderPergunta(idConversa, resposta, palavraChave);
+        } catch (Exception e) {
+            List<Anuncio> atualizado = DAO.findAllByClass(Anuncio.class);
+            Collections.sort(atualizado);
+
+            return badRequest(index.render(atualizado, false, adsHelped));
+        }
+        return anuncios();
+    }
+    
+    @Transactional
+    public static Result comentarioAbusivo(Long idConversa, Long id) {
+    	Anuncio anuncio = DAO.findByEntityId(Anuncio.class, id);    	
+    	anuncio.deletarComentario(idConversa);    	
+        DAO.persist(anuncio);
+        DAO.flush();        
+        return anuncios();	
+    }
+    
+    @Transactional
     public static Result sobre() {
     	return ok(views.html.sobre.render());
     }

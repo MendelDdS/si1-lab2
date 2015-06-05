@@ -79,7 +79,3 @@ $(function () {
         }
     });
 });
-
-$(function SubstituiVirgulaPorPonto(campo) {
-	campo.value = campo.value.replace(/&nbsp/gi, ",");
-});

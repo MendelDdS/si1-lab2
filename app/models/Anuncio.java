@@ -1,7 +1,9 @@
 package models;
 
 import java.util.Date;
+import java.util.*;
 import java.util.Objects;
+
 import javax.persistence.*;
 
 
@@ -50,7 +52,11 @@ public class Anuncio implements Comparable<Anuncio> {
     @Temporal(TemporalType.DATE)
     private Date data = new Date();
     
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Comentario> conversas;
+    
     public Anuncio() {
+    	this.conversas = new ArrayList<Comentario>();
     }
 
 	public Anuncio(String titulo, String descricao, String cidade, String bairro,String email, String perfilFacebook,
@@ -66,8 +72,9 @@ public class Anuncio implements Comparable<Anuncio> {
         this.estilosGosta = estilosGosta;
         this.estilosNaoGosta = estilosNaoGosta;
         this.instrumentos = Instrumentos;
-        
-        if (interesse.equals("Banda")) {
+    	this.conversas = new ArrayList<Comentario>();
+
+    	if (interesse.equals("Banda")) {
         	this.interesseEmFormarBanda = true;
         }       
         else if (interesse.equals("Ocasionalmente")){ 
@@ -154,6 +161,22 @@ public class Anuncio implements Comparable<Anuncio> {
             interesseEmTocarOcasionalmente = false;
     }
 
+    public String getEmail() { return email;}
+    
+    public void setEmail(String email) {
+    	this.email = email;
+    }
+    
+    public String getFacebook() { return perfilFacebook;}
+  
+    public String getPalavraChave() {
+		return palavraChave;
+	}
+
+	public void setPalavraChave(String palavraChave) {
+		this.palavraChave = palavraChave;
+	}
+
     public String getInteresse() {
     	if (getInteresseEmFormarBanda()) {
     		return "Interessado em formar banda";
@@ -175,8 +198,46 @@ public class Anuncio implements Comparable<Anuncio> {
          this.instrumentos = Instrumentos;
     }
 
-    public void setEmail(String email) {
-    	this.email = email;
+    public List<Comentario> getConversas() {
+        return conversas;
+    }
+
+    public void setConversas(List<Comentario> conversas) {
+        this.conversas = conversas;
+    }
+    
+    public void fazerPergunta(String pergunta) {
+        try {
+            conversas.add(new Comentario(pergunta));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void responderPergunta(Long idConversa, String resposta, String codigo) throws Exception {
+        if (!codigo.equals(this.palavraChave)) {
+            throw new Exception("Somente quem tem o código do anúncio pode responder perguntas.");
+        }
+
+        for (Comentario conversa : conversas) {
+            if (conversa.getId().equals(idConversa)) {
+                try {
+                    conversa.setResposta(resposta);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+        }
+    }
+    
+    public void deletarComentario(Long idConversa) {
+    	for (Comentario conversa : conversas) {
+            if (conversa.getId().equals(idConversa)) {
+            	conversas.remove(conversa);
+            	break;
+            }
+        }    	
     }
     
     public void setFacebook(String perfilFacebook) {
@@ -191,18 +252,6 @@ public class Anuncio implements Comparable<Anuncio> {
         return this.estilosNaoGosta.length() == 0;
     }
     
-    public String getEmail() { return email;}
-    
-    public String getFacebook() { return perfilFacebook;}
-  
-    public String getPalavraChave() {
-		return palavraChave;
-	}
-
-	public void setPalavraChave(String palavraChave) {
-		this.palavraChave = palavraChave;
-	}
-
     @Override
 	public int compareTo(Anuncio o) {
         return getData().compareTo(o.getData()) * (-1);
