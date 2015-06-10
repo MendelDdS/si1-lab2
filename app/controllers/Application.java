@@ -88,8 +88,8 @@ public class Application extends Controller {
     @Transactional
     public static Result responderPergunta(Long idConversa, Long id) {
         Form<String> formRespostaPreenchido = formFinish.bindFromRequest();
-        String resposta = formRespostaPreenchido.data().get("resposta");
         String palavraChave = formRespostaPreenchido.data().get("palavraChave");
+        String resposta = formRespostaPreenchido.data().get("resposta");
 
         Anuncio anuncio = DAO.findByEntityId(Anuncio.class, id);
 
@@ -101,6 +101,8 @@ public class Application extends Controller {
 
             return badRequest(index.render(atualizado, false, adsHelped));
         }
+        DAO.persist(anuncio);
+        DAO.flush();
         return anuncios();
     }
     
