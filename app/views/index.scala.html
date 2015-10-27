@@ -74,13 +74,15 @@
 			<div class="row">
 				<div class="col-md-12">
 					<div class="alert alert-success">
-						<h4>Nesse site você poderá criar anuncios da sua banda ou
-							fazer anúncios de interesse em participar de bandas, logo abaixo
-							você encontra o botão para criar seu anuncio. Você também poderá
-							buscar anúncios criados por outras pessoas na barra de navegação,
-							clicando em "Pesquisar".</h4>
+						<h4>Neste site você poderá criar anúncios da sua banda ou
+						 fazer anúncios de interesse em participar de bandas, logo
+						 abaixo você encontra o botão para criar seu anuncio clicando
+						 em "Criar Anúncio" ou clicando em "Cadastrar" na barra de
+						 navegação logo acima. Você também poderá buscar anúncios
+						 criados por outras pessoas digitando em "Busque anúncios aqui"
+						 e escolhendo as palavras-chaves definidas, logo abaixo. </h4>
 					</div>
-				</div>
+				</div>				
 
 			</div>
 			<div class="text-center alert alert-info">
@@ -130,129 +132,11 @@
 								class="pull-right finalizarAnuncio "><span
 								class="glyphicon glyphicon-remove-sign"
 								style="font-size: 2em; color: #FFFFFF"></span></a>
-							<h4 class="anuncioTitulo">@anuncio.getTitulo()</h4>
+	                            <a href=@routes.Application.adPage(anuncio.getId()) style="color:#FFFFFF"><h4><Strong>@anuncio.getTitulo()</Strong></h4><small>- Data: @anuncio.getDateFormat()</small></a>
 						</div>
 						<div class="panel-body">
-							<p>@anuncio.getDescricao()</p>
+							<p><h6>@anuncio.getDescricao()</h6></p>
 							<div class="clearfix"></div>
-							<hr>
-
-							<p>
-								<strong>Cidade:</strong> @anuncio.getCidade()
-							</p>
-							<p>
-								<strong>Bairro:</strong> @anuncio.getBairro()
-							</p>
-
-							<p>
-								<strong>Contatos:</strong> @anuncio.getEmail(),
-								@anuncio.getFacebook()
-							</p>
-							<p class="anuncioInteresse">
-								<strong>Interesse:</strong> @anuncio.getInteresse()
-							</p>
-
-							<p class="anuncioInstrumentos">
-								<strong>Instrumentos:</strong> @anuncio.getInstrumentos()
-							</p>
-
-							@if(!anuncio.isEstilosGostaEmpty) {
-							<p class="anuncioEstilos">
-								<strong>Estilos que gosta:</strong> @anuncio.getEstilosGosta()
-							</p>
-							} @if(!anuncio.isEstilosNaoGostaEmpty) {
-							<p>
-								<strong>Estilos que não gosta:</strong>
-								@anuncio.getEstilosNaoGosta()
-							</p>
-							}
-							<hr>
-
-
-							<form action="@routes.Application.fazerPergunta(anuncio.getId())"
-								method="POST">
-								<div class="input-group">
-									<div class="input-group-btn">
-										<button type="submit" class="btn btn-default">
-											<i class="glyphicon glyphicon-share"></i>
-										</button>
-									</div>
-									<input name="pergunta" type="text" class="form-control"
-										placeholder="Faça uma pergunta" required pattern=".*\S+.*">
-								</div>
-							</form>
-
-							<hr>
-
-							@for(conversa <- anuncio.getConversas()) { 
-							<a href="" data-toggle="modal" data-target="#abusivoModal@conversa.getId()"
-								class="pull-right comentarioAbusivo"><p	style="font-size: 10px;">Abusivo</p></a>
-							<div class="modal fade " id="abusivoModal@conversa.getId()">
-								<div class="modal-dialog style="width: 50%"">
-									<div class="modal-content col-md-6 col-sm-2">
-										<div class="modal-body">
-											<form action="@routes.Application.comentarioAbusivo(conversa.getId(), anuncio.getId())"	method="POST">
-												<label>Este comentário é abusivo?</label>
-												<button type="submit" class="btn btn-primary">Sim</button>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-
-							@if(conversa.getPergunta() != null) {
-							<div class="pergunta">
-								<p>
-									<strong>Anônimo:</strong> @conversa.getPergunta()
-								</p>
-							</div>
-
-							@if(conversa.getResposta == null) { <a href=""
-								data-toggle="modal"
-								data-target="#responderModal@conversa.getId()"
-								class="responderComentario">Responder</a>
-
-							<div class="modal fade" id="responderModal@conversa.getId()">
-								<div class="modal-dialog">
-									<div class="modal-content">
-										<div class="modal-header">
-											<button type="button" class="close" data-dismiss="modal"
-												aria-label="Close">
-												<span aria-hidden="true">&times;</span>
-											</button>
-											<h4 class="modal-title">Resposta</h4>
-										</div>
-
-										<div class="modal-body">
-											<form
-												action="@routes.Application.responderPergunta(conversa.getId(), anuncio.getId())"
-												method="POST">
-												<div class="form-group">
-													<label for="inputPalavraChave">Palavra-Chave</label> <input
-														name="palavraChave" type="text" class="form-control"
-														id="inputPalavraChave" placeholder="Código do seu anúncio"
-														required pattern=".*\S+.*">
-												</div>
-
-												<div class="form-group">
-													<label>Resposta</label> <input name="resposta" type="text"
-														class="form-control" id="inputResposta"
-														placeholder="Sua resposta" required pattern=".*\S+.*">
-												</div>
-
-												<button type="submit" class="btn btn-primary">Responder</button>
-											</form>
-										</div>
-									</div>
-								</div>
-							</div>
-							} } @if(conversa.getResposta != null) {
-							<div class="resposta">
-								<strong>Anunciante:</strong> @conversa.getResposta()
-							</div>
-							}
-							<hr>
-							}
 						</div>
 					</div>
 				</div>

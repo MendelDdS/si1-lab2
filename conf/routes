@@ -8,6 +8,7 @@ GET         /                               controllers.Application.index()
 # Map static resources from the /public folder to the /assets URL path
 GET			/sobre							controllers.Application.sobre()
 GET			/cadastrar						controllers.Application.cadastro()
+GET			/adPage							controllers.Application.adPage(id: Long)
 POST		/cadastrar						controllers.Application.novoAnuncio()
 POST        /anuncios/:codigo/:id/delete    controllers.Application.deletaAnuncio(codigo: String, id: Long)
 POST        /anuncios/criarPergnuta             controllers.Application.fazerPergunta(id: Long)

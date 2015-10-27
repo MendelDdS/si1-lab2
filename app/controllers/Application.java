@@ -7,6 +7,7 @@ import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
 import views.html.index;
+import views.html.*;
 
 import java.util.Collections;
 import java.util.List;
@@ -29,7 +30,7 @@ public class Application extends Controller {
 
         return ok(index.render(atualizado, false, adsHelped));
     }
-
+    
     @Transactional
     public static Result novoAnuncio() {
         Form<Anuncio> formPreenchido = form.bindFromRequest();
@@ -62,6 +63,7 @@ public class Application extends Controller {
             if (encontrouParceiros.equals("Sim")) {
             	adsHelped++;
             }
+            DAO.flush();
 
             return anuncios();
         } else {
@@ -82,7 +84,13 @@ public class Application extends Controller {
         DAO.persist(anuncio);
         DAO.flush();
 
-        return anuncios();
+        return adPage(id);
+    }
+    
+	@Transactional
+    public static Result adPage(Long id) {
+		Anuncio ad = DAO.findByEntityId(Anuncio.class, id);
+		return ok(adPage.render(ad));
     }
 
     @Transactional
@@ -103,7 +111,7 @@ public class Application extends Controller {
         }
         DAO.persist(anuncio);
         DAO.flush();
-        return anuncios();
+        return adPage(id);
     }
     
     @Transactional
@@ -112,7 +120,7 @@ public class Application extends Controller {
     	anuncio.deletarComentario(idConversa);    	
         DAO.persist(anuncio);
         DAO.flush();        
-        return anuncios();	
+        return adPage(id);	
     }
     
     @Transactional

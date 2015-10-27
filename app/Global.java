@@ -14,7 +14,6 @@ public class Global extends GlobalSettings {
         Logger.info("Aplicação inicializada...");
 
         JPA.withTransaction(new play.libs.F.Callback0() {
-            @Override
             public void invoke() throws Throwable {
                 for (int i = 1; i <= 25; i++) {
                     Anuncio anuncio = new Anuncio();

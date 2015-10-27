@@ -1,8 +1,8 @@
 package models;
 
-import java.util.Date;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.*;
-import java.util.Objects;
 
 import javax.persistence.*;
 
@@ -54,6 +54,9 @@ public class Anuncio implements Comparable<Anuncio> {
     
     @OneToMany(cascade = CascadeType.ALL)
     private List<Comentario> conversas;
+    
+	@Transient
+	private static DateFormat dateFormat = new SimpleDateFormat("dd/MM/yy");
     
     public Anuncio() {
     	this.conversas = new ArrayList<Comentario>();
@@ -110,6 +113,10 @@ public class Anuncio implements Comparable<Anuncio> {
 
 	public String getCidade() {
 		return cidade;
+	}
+	
+	public String getDateFormat() {
+		return dateFormat.format(data);
 	}
 	
 	public void setInteresse(String interesse) {
@@ -252,8 +259,7 @@ public class Anuncio implements Comparable<Anuncio> {
         return this.estilosNaoGosta.length() == 0;
     }
     
-    @Override
-	public int compareTo(Anuncio o) {
+    public int compareTo(Anuncio o) {
         return getData().compareTo(o.getData()) * (-1);
     }
 
