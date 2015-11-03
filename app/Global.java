@@ -4,16 +4,18 @@ import play.*;
 import models.DAO.GenericDAO;
 import play.db.jpa.JPA;
 
-
 public class Global extends GlobalSettings {
 
     private static GenericDAO DAO = new GenericDAO();
 
     @Override
     public void onStart(Application app) {
+    	super.onStart(app);
+    	
         Logger.info("Aplicação inicializada...");
 
         JPA.withTransaction(new play.libs.F.Callback0() {
+        	@Override
             public void invoke() throws Throwable {
                 for (int i = 1; i <= 25; i++) {
                     Anuncio anuncio = new Anuncio();
@@ -25,7 +27,7 @@ public class Global extends GlobalSettings {
                     anuncio.setFacebook("Perfil" + i);
                     anuncio.setInstrumentos("Instrumentos " + i);
                     anuncio.setEstilosGosta("Estilos que gosto " + i);
-                    anuncio.setEstilosNaoGosta("Estilos que não gosto " + i);                   
+                    anuncio.setEstilosNaoGosta("Estilos que não gosto " + i);
 
                     if (i % 2 == 0) {
                         anuncio.setInteresse("Banda");

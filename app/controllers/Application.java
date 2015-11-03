@@ -6,9 +6,7 @@ import play.data.Form;
 import play.db.jpa.Transactional;
 import play.mvc.Controller;
 import play.mvc.Result;
-import views.html.index;
 import views.html.*;
-
 import java.util.Collections;
 import java.util.List;
 

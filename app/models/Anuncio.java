@@ -259,7 +259,8 @@ public class Anuncio implements Comparable<Anuncio> {
         return this.estilosNaoGosta.length() == 0;
     }
     
-    public int compareTo(Anuncio o) {
+    @Override
+	public int compareTo(Anuncio o) {
         return getData().compareTo(o.getData()) * (-1);
     }
 
